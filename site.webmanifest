@@ -1,0 +1,17 @@
+{
+  "name": "Planlarken - Dinamik Zaman Haritası & Yazdırılabilir Planlayıcı",
+  "short_name": "Planlarken",
+  "description": "Geleceğinizi planlarken karmaşaya yer yok. Sunucusuz, gizlilik odaklı, yüksek çözünürlüklü yazdırılabilir PDF ve takvim üretici.",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#18181B",
+  "theme_color": "#F97316",
+  "icons": [
+    {
+      "src": "favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
