@@ -1,59 +1,85 @@
 import React from 'react';
-import { ModalWrapper } from './ModalWrapper';
-import { HelpCircle, Calendar, Layers, Download, Keyboard } from 'lucide-react';
+import { Modal } from './Modal';
+import { BookOpen, Calendar, Download, Keyboard } from 'lucide-react';
 
-export const UsageModal = ({ isOpen, onClose }) => {
-  return (
-    <ModalWrapper isOpen={isOpen} onClose={onClose} title="Nasıl Kullanılır?">
-      <div className="space-y-5">
-        <div className="flex items-start gap-3 bg-zinc-950 p-4 rounded-xl border border-zinc-800">
-          <Calendar className="w-6 h-6 text-orange-400 shrink-0 mt-0.5" />
-          <div>
-            <h4 className="font-semibold text-zinc-100 text-sm mb-1">1. Tarih Aralığı Belirleyin</h4>
-            <p className="text-xs text-zinc-400">
-              Sol paneldeki tarih seçiciden planınızın Başlangıç ve Bitiş tarihlerini girin. Uygulama otomatik olarak:
-            </p>
-            <ul className="list-disc list-inside text-xs text-zinc-400 mt-2 space-y-1">
-              <li><span className="text-orange-400 font-medium">1 - 7 Gün:</span> Dikey Akış (Daily Timeline) Moduna</li>
-              <li><span className="text-orange-400 font-medium">1 Hafta - 6 Ay:</span> Grid & Swimlane Kulvar Moduna</li>
-              <li><span className="text-orange-400 font-medium">6 Ay - 10+ Yıl:</span> Yol Haritası (Roadmap) Moduna ölçeklenir.</li>
-            </ul>
-          </div>
+const Step = ({ icon: Icon, title, children }) => (
+  <div style={{
+    display: 'flex', gap: '16px', padding: '16px',
+    background: 'var(--bg-muted)', borderRadius: '12px',
+    marginBottom: '10px'
+  }}>
+    <div style={{
+      width: '36px', height: '36px', borderRadius: '10px',
+      background: 'var(--orange)', display: 'flex',
+      alignItems: 'center', justifyContent: 'center', flexShrink: 0
+    }}>
+      <Icon size={18} color="white" />
+    </div>
+    <div>
+      <div style={{ fontWeight: '600', fontSize: '14px', color: 'var(--text-primary)', marginBottom: '4px' }}>
+        {title}
+      </div>
+      <div style={{ fontSize: '13px', color: 'var(--text-secondary)', lineHeight: '1.6' }}>
+        {children}
+      </div>
+    </div>
+  </div>
+);
+
+export const UsageModal = ({ isOpen, onClose }) => (
+  <Modal isOpen={isOpen} onClose={onClose} title="Nasil Kullanilir?">
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+      <Step icon={Calendar} title="1. Tarih Araligini Belirleyin">
+        Sol panelden baslangic ve bitis tarihlerini girin. Uygulama otomatik olarak
+        en uygun görselleştirme modunu secer: 1-7 gün için <strong>Akis Modu</strong>,
+        1 hafta - 6 ay için <strong>Kulvar Modu</strong>, 6 ay - 10 yil için <strong>Yol Haritasi</strong>.
+      </Step>
+
+      <Step icon={BookOpen} title="2. Gorev ve Hedeflerinizi Ekleyin">
+        "Yeni Oge Ekle" formuyla her hedefi tarih araligina dagitarak ekleyin.
+        Onemli tarihler için "Kilometre Tasi (Milestone)" secenegini isaretleyin.
+      </Step>
+
+      <Step icon={Download} title="3. Indirin veya Yazdierin">
+        Sag paneldeki önizlemeyi <strong>PDF</strong> (tarayici ile yazdir),
+        <strong> JSON</strong> (yedekleme/geri yukleme), <strong>CSV</strong> (Excel)
+        veya <strong>ICS</strong> (Google/Apple Takvim) formatinda indirin.
+      </Step>
+
+      <div style={{
+        marginTop: '12px', padding: '14px',
+        background: 'var(--orange-light)',
+        border: '1px solid var(--border-accent)',
+        borderRadius: '12px'
+      }}>
+        <div style={{
+          display: 'flex', alignItems: 'center', gap: '8px',
+          fontWeight: '600', fontSize: '13px', color: 'var(--orange)',
+          marginBottom: '8px'
+        }}>
+          <Keyboard size={15} /> Klavye Kisayollari
         </div>
-
-        <div className="flex items-start gap-3 bg-zinc-950 p-4 rounded-xl border border-zinc-800">
-          <Layers className="w-6 h-6 text-orange-400 shrink-0 mt-0.5" />
-          <div>
-            <h4 className="font-semibold text-zinc-100 text-sm mb-1">2. Kategoriler ve Hedefler Ekleyin</h4>
-            <p className="text-xs text-zinc-400">
-              İş, Kişisel, Sağlık veya Finans gibi özel renkli kategoriler oluşturun. Ardından etkinliklerinizi ve kilit <strong>Dönüm Noktalarınızı (Milestones)</strong> ekleyin.
-            </p>
-          </div>
-        </div>
-
-        <div className="flex items-start gap-3 bg-zinc-950 p-4 rounded-xl border border-zinc-800">
-          <Download className="w-6 h-6 text-orange-400 shrink-0 mt-0.5" />
-          <div>
-            <h4 className="font-semibold text-zinc-100 text-sm mb-1">3. Yazdırın veya Dışa Aktarın</h4>
-            <p className="text-xs text-zinc-400">
-              Sağ paneldeki canlı A4/A3 baskı önizlemesini tek tıkla <strong>PDF</strong>, <strong>JSON</strong>, <strong>CSV</strong> veya Apple/Google Takvim <strong>ICS</strong> formatlarında indirin.
-            </p>
-          </div>
-        </div>
-
-        <div className="bg-orange-500/10 border border-orange-500/20 p-4 rounded-xl">
-          <div className="flex items-center gap-2 text-orange-400 font-semibold text-xs mb-2">
-            <Keyboard className="w-4 h-4" />
-            <span>Klavye Kısayolları</span>
-          </div>
-          <div className="grid grid-cols-2 gap-2 text-xs text-zinc-300">
-            <div><kbd className="px-1.5 py-0.5 bg-zinc-800 rounded font-mono text-[11px] border border-zinc-700">ESC</kbd> Modalları Kapatır</div>
-            <div><kbd className="px-1.5 py-0.5 bg-zinc-800 rounded font-mono text-[11px] border border-zinc-700">Ctrl + P</kbd> PDF Yazdırır</div>
-            <div><kbd className="px-1.5 py-0.5 bg-zinc-800 rounded font-mono text-[11px] border border-zinc-700">Ctrl + S</kbd> JSON İndirir</div>
-            <div><kbd className="px-1.5 py-0.5 bg-zinc-800 rounded font-mono text-[11px] border border-zinc-700">Enter</kbd> Yeni Öğe Ekle</div>
-          </div>
+        <div style={{
+          display: 'grid', gridTemplateColumns: '1fr 1fr',
+          gap: '6px', fontSize: '12px', color: 'var(--text-secondary)'
+        }}>
+          {[
+            ['ESC', 'Modal kapat'],
+            ['Ctrl + P', 'PDF yazdir'],
+            ['Ctrl + S', 'JSON indir'],
+            ['Enter', 'Yeni oge ekle']
+          ].map(([key, desc]) => (
+            <div key={key} style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+              <kbd style={{
+                padding: '2px 8px', background: 'var(--bg-card)',
+                border: '1px solid var(--border)', borderRadius: '6px',
+                fontFamily: 'monospace', fontSize: '11px', fontWeight: '600'
+              }}>{key}</kbd>
+              <span>{desc}</span>
+            </div>
+          ))}
         </div>
       </div>
-    </ModalWrapper>
-  );
-};
+    </div>
+  </Modal>
+);

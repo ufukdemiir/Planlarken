@@ -1,10 +1,15 @@
 import Papa from 'papaparse';
 
-export const exportToCsv = (projectMeta, categories, items, filename = 'Planlarken-Hedefler.csv') => {
+/**
+ * CSV Export — UTF-8 BOM ile (Excel Turkce karakter destegi icin zorunlu)
+ */
+export const exportToCsv = (projectMeta, categories, items, filename) => {
   if (!items || items.length === 0) {
-    alert('Dışa aktarılacak görev veya hedef bulunmuyor.');
+    alert('Disari aktarilacak oge bulunamadi.');
     return;
   }
+
+  const safeFilename = filename || 'Planlarken.csv';
 
   const categoryMap = categories.reduce((acc, cat) => {
     acc[cat.id] = cat.name;
@@ -13,27 +18,25 @@ export const exportToCsv = (projectMeta, categories, items, filename = 'Planlark
 
   const rows = items.map((item, index) => ({
     'No': index + 1,
-    'Başlık': item.title,
+    'Baslik': item.title,
     'Kategori': categoryMap[item.categoryId] || 'Genel',
-    'Başlangıç Tarihi': item.startDate,
-    'Bitiş Tarihi': item.endDate,
-    'Dönüm Noktası (Milestone)': item.milestone ? 'Evet' : 'Hayır',
-    'Tamamlandı': item.completed ? 'Evet' : 'Hayır',
+    'Baslangic Tarihi': item.startDate,
+    'Bitis Tarihi': item.endDate,
+    'Donum Noktasi': item.milestone ? 'Evet' : 'Hayir',
+    'Tamamlandi': item.completed ? 'Evet' : 'Hayir',
     'Notlar': item.notes || ''
   }));
 
-  const csvContent = Papa.unparse(rows, {
-    quotes: true,
-    header: true
-  });
+  const csvContent = Papa.unparse(rows, { quotes: true, header: true });
 
-  // UTF-8 BOM ekleyelim ki Excel Türkçe karakterleri (İ, ş, ç, ğ, ö, ü) düzgün açsın
+  // UTF-8 BOM (\uFEFF) — Excel'in Turkce karakterleri dogru okumasi icin gerekli
   const blob = new Blob(['\uFEFF' + csvContent], { type: 'text/csv;charset=utf-8;' });
   const url = URL.createObjectURL(blob);
-  const link = document.createElement('a');
-  link.setAttribute('href', url);
-  link.setAttribute('download', filename);
-  document.body.appendChild(link);
-  link.click();
-  document.body.removeChild(link);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = safeFilename;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
 };

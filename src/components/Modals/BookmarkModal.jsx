@@ -1,57 +1,69 @@
 import React, { useState } from 'react';
-import { ModalWrapper } from './ModalWrapper';
+import { Modal } from './Modal';
 import { Bookmark, Check, Star } from 'lucide-react';
 
 export const BookmarkModal = ({ isOpen, onClose }) => {
   const [copied, setCopied] = useState(false);
 
-  const handleCopyUrl = () => {
-    navigator.clipboard.writeText(window.location.href);
+  const handleCopy = () => {
+    navigator.clipboard.writeText(window.location.href).catch(() => {});
     setCopied(true);
     setTimeout(() => setCopied(false), 2500);
   };
 
-  const isMac = typeof window !== 'undefined' && window.navigator.platform.toUpperCase().indexOf('MAC') >= 0;
-  const shortcutKey = isMac ? 'Cmd + D' : 'Ctrl + D';
+  const isMac = typeof navigator !== 'undefined' &&
+    /Mac|iPhone|iPad|iPod/.test(navigator.platform || '');
 
   return (
-    <ModalWrapper isOpen={isOpen} onClose={onClose} title="Yer İmlerine Ekle">
-      <div className="flex flex-col items-center text-center gap-4 py-2">
-        <div className="p-4 bg-orange-500/10 border border-orange-500/20 rounded-2xl text-orange-400">
-          <Star className="w-10 h-10 fill-orange-400/20" />
+    <Modal isOpen={isOpen} onClose={onClose} title="Yer Imi Ekle">
+      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '20px', paddingTop: '8px' }}>
+        <div style={{
+          width: '64px', height: '64px', borderRadius: '20px',
+          background: 'var(--orange-light)',
+          border: '1px solid var(--border-accent)',
+          display: 'flex', alignItems: 'center', justifyContent: 'center'
+        }}>
+          <Star size={28} color="var(--orange)" fill="rgba(249,115,22,0.15)" />
         </div>
 
-        <p className="text-zinc-200 text-sm leading-relaxed">
-          <strong>Planlarken</strong> uygulamasına istediğiniz zaman tek tıkla ulaşmak için tarayıcınızın yer imlerine ekleyin.
+        <p style={{
+          fontSize: '14px', color: 'var(--text-secondary)',
+          textAlign: 'center', lineHeight: '1.7', maxWidth: '340px'
+        }}>
+          Planlarken'e istediginiz zaman hizlica erisebilmek icin tarayicinizin
+          yer imleri listesine ekleyin.
         </p>
 
-        <div className="w-full bg-zinc-950 p-4 rounded-xl border border-zinc-800 flex items-center justify-between">
-          <div className="text-left">
-            <span className="text-xs text-zinc-400 block">Klavye Kısayolu:</span>
-            <span className="text-base font-bold text-orange-400 font-mono">{shortcutKey}</span>
+        <div style={{
+          width: '100%', padding: '16px',
+          background: 'var(--bg-muted)', borderRadius: '12px',
+          display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '12px'
+        }}>
+          <div>
+            <div style={{ fontSize: '11px', color: 'var(--text-muted)', marginBottom: '2px' }}>
+              Klavye Kisayolu
+            </div>
+            <kbd style={{
+              fontSize: '16px', fontWeight: '700', fontFamily: 'monospace',
+              color: 'var(--orange)', letterSpacing: '0.05em'
+            }}>
+              {isMac ? 'Cmd + D' : 'Ctrl + D'}
+            </kbd>
           </div>
           <button
-            onClick={handleCopyUrl}
-            className="flex items-center gap-2 px-4 py-2 bg-orange-500 hover:bg-orange-600 text-white text-xs font-semibold rounded-lg transition-all"
+            className="btn-primary"
+            onClick={handleCopy}
+            style={{ flexShrink: 0 }}
           >
-            {copied ? (
-              <>
-                <Check className="w-4 h-4" />
-                <span>Bağlantı Kopyalandı!</span>
-              </>
-            ) : (
-              <>
-                <Bookmark className="w-4 h-4" />
-                <span>Sayfa Linkini Kopyala</span>
-              </>
-            )}
+            {copied ? <Check size={15} /> : <Bookmark size={15} />}
+            {copied ? 'Kopyalandi!' : 'Baglantıyı Kopyala'}
           </button>
         </div>
 
-        <p className="text-xs text-zinc-400">
-          İpucu: Mobil cihazlarda tarayıcı menüsünden <em>"Ana Ekrana Ekle"</em> seçeneğini tercih edebilirsiniz.
+        <p style={{ fontSize: '12px', color: 'var(--text-muted)', textAlign: 'center' }}>
+          Mobil cihazlarda tarayici menusunden "Ana Ekrana Ekle" secenegini kullanabilirsiniz.
         </p>
       </div>
-    </ModalWrapper>
+    </Modal>
   );
 };

@@ -1,78 +1,63 @@
+/* Türkçe karakter referansı (kod içinde kontrol amaçlı):
+   Büyük: Ç Ğ İ Ö Ş Ü
+   Küçük: ç ğ ı i ö ş ü
+*/
+
 export const defaultProjectData = {
   projectMeta: {
-    title: "2026 Stratejik Yol Haritası & Kişisel Gelişim Planı",
-    subtitle: "Geleceğinizi planlarken karmaşaya yer yok.",
+    title: "2026-2027 Kariyer ve Kisisel Gelisim Plani",
+    subtitle: "Geleceginizi planlarken karmasaya yer yok.",
     startDate: "2026-10-01",
     endDate: "2026-12-31",
-    paperSize: "A4", // A4 veya A3
-    orientation: "landscape", // landscape veya portrait
-    theme: "orange-dark"
+    paperSize: "A4",
+    orientation: "landscape",
+    theme: "light"
   },
   categories: [
-    { id: "c1", name: "İş & Kariyer", color: "#F97316" }, // Turuncu
-    { id: "c2", name: "Kişisel Gelişim & Sağlık", color: "#10B981" }, // Zümrüt Yeşil
-    { id: "c3", name: "Finans & Yatırım", color: "#6366F1" } // İndigo
+    { id: "c1", name: "Is ve Kariyer",   color: "#F97316" },
+    { id: "c2", name: "Saglik ve Spor",  color: "#10B981" },
+    { id: "c3", name: "Finans",          color: "#6366F1" }
   ],
   items: [
     {
       id: "item1",
-      title: "Planlarken Web Uygulaması Lansmanı",
-      startDate: "2026-10-05",
-      endDate: "2026-10-20",
+      title: "Web Uygulamasi Yayini",
+      startDate: "2026-10-01",
+      endDate: "2026-10-15",
       categoryId: "c1",
       milestone: true,
       completed: false,
-      notes: "GitHub Pages üzerinden canlıya alma, SEO optimizasyonu ve Etsy şablon entegrasyonu."
+      notes: "GitHub Pages uzerinden canli yayina alma"
     },
     {
       id: "item2",
-      title: "Yapay Zeka ve Yazılım Mimarisi Sertifikası",
-      startDate: "2026-10-15",
+      title: "Online Sertifika Programi",
+      startDate: "2026-10-10",
       endDate: "2026-11-30",
       categoryId: "c1",
       milestone: false,
       completed: false,
-      notes: "Haftada 6 saat modüler çalışma ve projelerin tamamlanması."
+      notes: "Haftada 5 saat modüler calisma"
     },
     {
       id: "item3",
-      title: "Maraton Koşusu Hazırlık Kampı",
+      title: "Maraton Hazirligi",
       startDate: "2026-10-01",
-      endDate: "2026-11-15",
+      endDate: "2026-11-20",
       categoryId: "c2",
-      milestone: true,
-      completed: true,
-      notes: "Haftalık 35 km koşu ve düzenli antrenman takibi."
+      milestone: false,
+      completed: false,
+      notes: "Haftada 3 gun kos antremani"
     },
     {
       id: "item4",
-      title: "Dijital Portföy ve Yatırım Sepeti Güncellemesi",
-      startDate: "2026-11-01",
-      endDate: "2026-11-10",
-      categoryId: "c3",
-      milestone: false,
-      completed: false,
-      notes: "Yıllık fon dağılımlarının gözden geçirilmesi."
-    },
-    {
-      id: "item5",
-      title: "Kış Dönemi Kitap Okuma Listesi",
-      startDate: "2026-10-01",
+      title: "Yil Sonu Butce Plani",
+      startDate: "2026-12-01",
       endDate: "2026-12-31",
-      categoryId: "c2",
-      milestone: false,
-      completed: false,
-      notes: "Felsefe ve sistem tasarımı üzerine 6 adet eser."
-    },
-    {
-      id: "item6",
-      title: "2027 Yılı Bütçe ve Hedef Kapanışı",
-      startDate: "2026-12-15",
-      endDate: "2026-12-30",
       categoryId: "c3",
       milestone: true,
       completed: false,
-      notes: "Yıl sonu muhasebe ve stratejik planlama oturumu."
+      notes: "2027 yili yatirim ve tasarruf hedefleri"
     }
   ]
 };

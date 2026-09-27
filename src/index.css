@@ -1,62 +1,198 @@
 @import "tailwindcss";
 
-@layer base {
-  :root {
-    --font-serif-primary: 'Playfair Display', 'Lora', Georgia, serif;
-    --font-serif-secondary: 'Cormorant Garamond', Georgia, serif;
-    --font-sans: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  }
+/* =====================================================
+   PLANLARKEN — Global CSS
+   Varsayılan: Aydınlık mod (Light-first)
+   ===================================================== */
+
+/* Font Variables */
+:root {
+  --font-serif: 'Playfair Display', Georgia, 'Times New Roman', serif;
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+
+  /* Aydınlık Mod Renk Paleti */
+  --bg-base:      #FFFBF5;
+  --bg-card:      #FFFFFF;
+  --bg-muted:     #FFF7ED;
+  --border:       #E4E4E7;
+  --border-accent:#FED7AA;
+  --text-primary: #18181B;
+  --text-secondary:#52525B;
+  --text-muted:   #A1A1AA;
+  --orange:       #F97316;
+  --orange-dark:  #EA580C;
+  --orange-light: #FFF7ED;
 }
 
-.font-serif-title {
-  font-family: var(--font-serif-primary);
+/* Karanlık Mod Renk Paleti */
+.dark {
+  --bg-base:      #0F0F11;
+  --bg-card:      #18181B;
+  --bg-muted:     #27272A;
+  --border:       #3F3F46;
+  --border-accent:#78350F;
+  --text-primary: #FAFAFA;
+  --text-secondary:#A1A1AA;
+  --text-muted:   #71717A;
+  --orange-light: #1C0A00;
 }
 
-.font-serif-accent {
-  font-family: var(--font-serif-secondary);
+/* ====== Base ====== */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html {
+  font-family: var(--font-sans);
+  background-color: var(--bg-base);
+  color: var(--text-primary);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transition: background-color 0.3s, color 0.3s;
 }
 
-/* Custom Scrollbars */
-::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+body {
+  min-height: 100vh;
+  background-color: var(--bg-base);
+  color: var(--text-primary);
 }
-::-webkit-scrollbar-track {
-  background: transparent;
-}
+
+/* ====== Typography ====== */
+.font-serif { font-family: var(--font-serif); }
+
+/* ====== Scrollbar ====== */
+::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb {
-  background: rgba(249, 115, 22, 0.3);
-  border-radius: 9999px;
+  background: rgba(249, 115, 22, 0.25);
+  border-radius: 99px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(249, 115, 22, 0.6);
+  background: rgba(249, 115, 22, 0.5);
 }
 
-/* Print Specific Rules */
+/* ====== Selection ====== */
+::selection { background: #F97316; color: white; }
+
+/* ====== Input / Select / Textarea Reset ====== */
+input, select, textarea {
+  font-family: var(--font-sans);
+  background-color: var(--bg-base);
+  color: var(--text-primary);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 8px 12px;
+  font-size: 13px;
+  outline: none;
+  width: 100%;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+input:focus, select:focus, textarea:focus {
+  border-color: var(--orange);
+  box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.12);
+}
+input::placeholder, textarea::placeholder {
+  color: var(--text-muted);
+}
+
+/* ====== Kart ====== */
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 20px;
+  transition: border-color 0.2s;
+}
+
+/* ====== Buton ====== */
+.btn-primary {
+  background: var(--orange);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  padding: 10px 20px;
+  font-size: 13px;
+  font-weight: 600;
+  font-family: var(--font-sans);
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.btn-primary:hover { background: var(--orange-dark); }
+.btn-primary:active { transform: scale(0.98); }
+
+.btn-ghost {
+  background: transparent;
+  color: var(--text-secondary);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 8px 14px;
+  font-size: 12px;
+  font-weight: 500;
+  font-family: var(--font-sans);
+  cursor: pointer;
+  transition: all 0.2s;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.btn-ghost:hover {
+  border-color: var(--orange);
+  color: var(--orange);
+  background: var(--orange-light);
+}
+
+/* ====== Baskı (Print) — Yazdırılabilir Sayfa ====== */
 @media print {
+  * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+
   body {
     background: white !important;
-    color: black !important;
+    color: #18181B !important;
+    font-family: 'Playfair Display', Georgia, serif !important;
+    margin: 0 !important;
+    padding: 0 !important;
   }
-  .no-print {
-    display: none !important;
-  }
-  .print-area {
+
+  /* Sadece print-area görünsün, geri kalanı gizlensin */
+  .no-print { display: none !important; }
+
+  /* Print alanı tam sayfa olsun */
+  .print-root {
+    display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
     margin: 0 !important;
     padding: 0 !important;
     box-shadow: none !important;
     border: none !important;
-    width: 100% !important;
+    border-radius: 0 !important;
+    page-break-inside: avoid;
+  }
+
+  @page {
+    margin: 15mm;
+    size: A4 landscape;
   }
 }
 
-/* Paper Page Shadows & Aspect Ratios */
-.paper-page {
-  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3), 0 8px 10px -6px rgba(0, 0, 0, 0.2);
-  transition: all 0.3s ease;
+/* ====== Kağıt Gölgesi (Preview) ====== */
+.paper-shadow {
+  box-shadow:
+    0 4px 6px -1px rgba(0,0,0,0.06),
+    0 10px 15px -3px rgba(0,0,0,0.08),
+    0 20px 40px -10px rgba(0,0,0,0.1);
 }
 
-/* Smooth Glow Accent */
-.orange-glow {
-  box-shadow: 0 0 25px -5px rgba(249, 115, 22, 0.4);
+/* ====== Animasyonlar ====== */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
+.animate-in { animation: fadeIn 0.25s ease forwards; }
+
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.96); }
+  to   { opacity: 1; transform: scale(1); }
+}
+.modal-in { animation: scaleIn 0.2s ease forwards; }

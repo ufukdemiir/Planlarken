@@ -1,27 +1,45 @@
 import React from 'react';
-import { ModalWrapper } from './ModalWrapper';
-import { ShieldAlert } from 'lucide-react';
+import { Modal } from './Modal';
+import { ShieldCheck } from 'lucide-react';
 
-export const DisclaimerModal = ({ isOpen, onClose }) => {
-  return (
-    <ModalWrapper isOpen={isOpen} onClose={onClose} title="Sorumluluk Reddi">
-      <div className="flex flex-col items-center text-center gap-4 py-2">
-        <div className="p-4 bg-orange-500/10 border border-orange-500/20 rounded-2xl text-orange-400">
-          <ShieldAlert className="w-10 h-10" />
-        </div>
-        
-        <p className="text-zinc-200 text-base leading-relaxed bg-zinc-950/60 p-5 rounded-xl border border-zinc-800/60">
-          "Tüm verileriniz sunucu bağlantısı olmaksızın tarayıcınızın yerel deposunda (<code className="text-orange-400 font-mono text-xs px-1.5 py-0.5 bg-zinc-900 rounded">localStorage</code>) tutulur ve sayfa kapatıldığında korunur; ancak önbellek temizliği kaynaklı kalıcı veri kayıpları tamamen kullanıcı sorumluluğundadır."
+export const DisclaimerModal = ({ isOpen, onClose }) => (
+  <Modal isOpen={isOpen} onClose={onClose} title="Sorumluluk Reddi">
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+      <div style={{
+        display: 'flex', gap: '14px', padding: '16px',
+        background: 'var(--orange-light)',
+        border: '1px solid var(--border-accent)',
+        borderRadius: '12px'
+      }}>
+        <ShieldCheck size={22} color="var(--orange)" style={{ flexShrink: 0, marginTop: '2px' }} />
+        <p style={{
+          fontSize: '14px', lineHeight: '1.7',
+          color: 'var(--text-primary)', fontStyle: 'italic'
+        }}>
+          "Tum verileriniz sunucu baglantisi olmaksizin tarayicinizin yerel deposunda
+          (<code style={{ fontFamily: 'monospace', fontSize: '12px', color: 'var(--orange)' }}>localStorage</code>)
+          tutulur ve sayfa kapatildiginda korunur; ancak onbellek temizligi kaynakli
+          kalici veri kayiplari tamamen kullanici sorumlulugundadir."
         </p>
-
-        <div className="w-full text-left bg-zinc-950/40 p-4 rounded-xl border border-zinc-800/40 text-xs text-zinc-400 space-y-2">
-          <p className="font-semibold text-zinc-300">Önemli İpuçları:</p>
-          <ul className="list-disc list-inside space-y-1 text-zinc-400">
-            <li>Planlarınızı düzenli aralıklarla sol paneldeki <strong className="text-orange-400">JSON İndir</strong> seçeneği ile bilgisayarınıza yedekleyebilirsiniz.</li>
-            <li>Tarayıcı geçmişinizi ve önbelleğinizi temizlerken site verilerinin silinebileceğini unutmayınız.</li>
-          </ul>
-        </div>
       </div>
-    </ModalWrapper>
-  );
-};
+
+      <div style={{
+        padding: '14px',
+        background: 'var(--bg-muted)',
+        borderRadius: '12px',
+        fontSize: '13px',
+        color: 'var(--text-secondary)',
+        lineHeight: '1.7'
+      }}>
+        <strong style={{ color: 'var(--text-primary)', display: 'block', marginBottom: '8px' }}>
+          Veri Guvenliginiz Icin Oneriler:
+        </strong>
+        <ul style={{ paddingLeft: '18px', display: 'flex', flexDirection: 'column', gap: '4px' }}>
+          <li>Planlarinizi duzenli olarak <strong>JSON Indir</strong> butonu ile bilgisayariniza yedekleyin.</li>
+          <li>Tarayici geciminizi temizlemeden once verilerinizi disa aktarmayi unutmayin.</li>
+          <li>Uygulama hicbir verInizi uzak sunuculara gondermez, her sey cihazinizda kalir.</li>
+        </ul>
+      </div>
+    </div>
+  </Modal>
+);
